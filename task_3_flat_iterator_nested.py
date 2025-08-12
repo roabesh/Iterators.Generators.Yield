@@ -9,6 +9,9 @@ class FlatIterator:
         return self
 
     def __next__(self):
+        # Lazy initialization to allow calling next() without iter()
+        if self._stack is None:
+            self._stack = [iter(self.list_of_list)]
         while self._stack:
             try:
                 next_item = next(self._stack[-1])
